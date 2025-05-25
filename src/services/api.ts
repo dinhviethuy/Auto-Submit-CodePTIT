@@ -119,7 +119,7 @@ export const getAllQuestions = async () => {
     console.log(`\x1b[32m> Có tất cả ${data.length} bài\x1b[0m`)
     console.log(`\x1b[32m> Có ${solvedQuestions.length} bài đã giải\x1b[0m`)
     console.log(`\x1b[31m> Có ${unsolvedQuestions.length} bài chưa giải\x1b[0m`)
-    console.log(`\x1b[33m> Có ${solvedAndTriedQuestions.length} bài đã thử\x1b[0m`)
+    console.log(`\x1b[33m> Có ${solvedAndTriedQuestions.length + solvedQuestions.length} bài đã thử\x1b[0m`)
     if (!fs.existsSync('src/data')) {
       fs.mkdirSync('src/data')
     }
