@@ -70,26 +70,21 @@ const main = async () => {
           process.exit(0)
         } else {
           console.log(`\x1b[31mLỗi khi submit bài ${question}: ${response?.message || 'Không rõ lỗi'}\x1b[0m`)
-          await sleep(RandomDelayTime(1000, 5000))
+          await sleep(RandomDelayTime(3000, 5000))
           continue
         }
-        await sleep(RandomDelayTime(1000, 5000))
+        await sleep(RandomDelayTime(3000, 5000))
 
         let done = false
         while (!done && solution_id) {
           const checkResultResponse = await getSolutions(solution_id)
-          if (checkResultResponse?.data?.result === 'AC') {
-            console.log(`\x1b[32mKết quả cho ${question}: ${checkResultResponse.data.result}\x1b[0m`)
-          } else {
-            console.log(`\x1b[31mKết quả cho ${question}: ${checkResultResponse.data.result}\x1b[0m`)
-          }
 
           if (checkResultResponse?.code === HttpStatus.OK) {
             if (checkResultResponse?.data?.result !== null) {
               done = true
               console.log(`\x1b[32mKết quả cho ${question}: ${checkResultResponse.data.result}\x1b[0m`)
             } else {
-              await sleep(RandomDelayTime(1000, 5000))
+              await sleep(RandomDelayTime(3000, 5000))
             }
           } else {
             console.log(
@@ -99,11 +94,11 @@ const main = async () => {
           }
         }
         console.log(`\x1b[32mĐã hoàn tất xử lý cho bài ${question}\x1b[0m`)
-        await sleep(RandomDelayTime(1000, 5000))
+        await sleep(RandomDelayTime(2000, 4000))
       } catch (error) {
         console.log(`\x1b[31mLỗi khi xử lý bài ${question}\x1b[0m`)
         console.log(error)
-        await sleep(RandomDelayTime(1000, 5000))
+        await sleep(RandomDelayTime(3000, 5000))
         continue
       }
     }
