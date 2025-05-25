@@ -123,8 +123,11 @@ export const getAllQuestions = async () => {
     if (!fs.existsSync('src/data')) {
       fs.mkdirSync('src/data')
     }
-    fs.writeFileSync('src/data/solved_questions.json', JSON.stringify(solvedQuestion, null, 2))
-    fs.writeFileSync('src/data/unsolved_questions.json', JSON.stringify(unsolvedQuestion, null, 2))
+    fs.writeFileSync(`src/data/solved_questions_${envConfig.COURSE_ID}.json`, JSON.stringify(solvedQuestion, null, 2))
+    fs.writeFileSync(
+      `src/data/unsolved_questions_${envConfig.COURSE_ID}.json`,
+      JSON.stringify(unsolvedQuestion, null, 2)
+    )
   } else {
     console.log(`\x1b[31m> course_id không hợp lệ trong file .env\x1b[0m`)
     console.log(`\x1b[33m> Đang lấy course_id từ server...\x1b[0m`)

@@ -7,8 +7,6 @@ import { RandomDelayTime } from './utils'
 import envConfig from './config/envConfig'
 
 const files = fs.readdirSync(path.resolve(__dirname, 'resource'))
-const solvedQuestions = JSON.parse(fs.readFileSync('src/data/solved_questions.json', 'utf8'))
-const unsolvedQuestions = JSON.parse(fs.readFileSync('src/data/unsolved_questions.json', 'utf8'))
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -17,6 +15,10 @@ const main = async () => {
   if (!isLogin) {
     return
   }
+  const solvedQuestions = JSON.parse(fs.readFileSync(`src/data/solved_questions_${envConfig.COURSE_ID}.json`, 'utf8'))
+  const unsolvedQuestions = JSON.parse(
+    fs.readFileSync(`src/data/unsolved_questions_${envConfig.COURSE_ID}.json`, 'utf8')
+  )
   async function SubmitCode() {
     if (files.length === 0) {
       console.log(`\x1b[31mKhông tìm thấy file cần submit\x1b[0m`)
@@ -63,6 +65,7 @@ const main = async () => {
             envConfig.COMPILER = compiler.id
             fs.writeFileSync('.env', newEnvContent)
             console.log(`\x1b[32mĐã chỉnh lại compiler trong file .env để phù hợp với ${compiler.ext}\x1b[0m`)
+            process.exit(0)
           }
         }
         const codePath = path.resolve(__dirname, 'resource', file + endWithExt)
