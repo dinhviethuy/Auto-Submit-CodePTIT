@@ -20,14 +20,16 @@ if (!fs.existsSync('src/resource')) {
 const envSchema = z.object({
   MA_SV: z.string(),
   PASSWORD: z.string(),
-  COURSE_ID: z.string(),
-  COMPILER: z.custom<number>((val: string) => {
-    const newVal = parseInt(val)
-    if (isNaN(newVal)) {
-      return false
-    }
-    return true
-  })
+  COURSE_ID: z.string().transform((val) => parseInt(val)),
+  COMPILER: z
+    .custom<string>((val: string) => {
+      const newVal = parseInt(val)
+      if (isNaN(newVal)) {
+        return false
+      }
+      return newVal
+    })
+    .transform((val) => parseInt(val))
 })
 
 const envParsed = envSchema.safeParse(process.env)

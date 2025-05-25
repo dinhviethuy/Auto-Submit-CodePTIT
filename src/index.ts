@@ -41,6 +41,7 @@ const main = async () => {
             ? QuestionStatus.OTHER
             : QuestionStatus.NULL
         if (result === QuestionStatus.AC) {
+          console.log(`\x1b[32mBài ${question} đã được giải, bỏ qua\x1b[0m`)
           continue
         } else if (result === QuestionStatus.NULL) {
           console.log(`\x1b[31mKhông tìm thấy bài ${question}\x1b[0m`)
@@ -58,6 +59,8 @@ const main = async () => {
           console.log(`\x1b[32mĐã đổi tên file ${file} thành ${file + endWithExt}\x1b[0m`)
         } else {
           const compiler = COMPILER.find((item) => item.ext === fileExtension)!
+          console.log(compiler)
+          console.log(envConfig.COMPILER)
           if (compiler.id !== envConfig.COMPILER) {
             console.log(`\x1b[33mĐang chỉnh lại compiler trong file .env\x1b[0m`)
             const envContent = fs.readFileSync('.env', 'utf8')
