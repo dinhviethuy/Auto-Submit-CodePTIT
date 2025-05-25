@@ -51,7 +51,7 @@ const main = async () => {
         const fileExtension = path.extname(file)
         let endWithExt = ''
         if (!COMPILER_EXTENSION.includes(fileExtension as any)) {
-          endWithExt = COMPILER_EXTENSION.find((item) => item === fileExtension)!
+          endWithExt = COMPILER.find((item) => item.id === envConfig.COMPILER)!.ext
           fs.renameSync(
             path.resolve(__dirname, 'resource', file),
             path.resolve(__dirname, 'resource', file + endWithExt)
@@ -85,7 +85,8 @@ const main = async () => {
           solution_id = response.solution_id
         } else if (response?.code === HttpStatus.BAD_REQUEST) {
           console.log(`\x1b[31mLỗi khi submit bài ${question}: ${response?.message || 'Không rõ lỗi'}\x1b[0m`)
-          process.exit(0)
+          await sleep(RandomDelayTime(3000, 5000))
+          continue
         } else {
           console.log(`\x1b[31mLỗi khi submit bài ${question}: ${response?.message || 'Không rõ lỗi'}\x1b[0m`)
           await sleep(RandomDelayTime(3000, 5000))
