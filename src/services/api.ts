@@ -126,8 +126,37 @@ export const getAllQuestions = async () => {
     fs.writeFileSync('src/data/solved_questions.json', JSON.stringify(solvedQuestion, null, 2))
     fs.writeFileSync('src/data/unsolved_questions.json', JSON.stringify(unsolvedQuestion, null, 2))
   } else {
-    console.log('\x1b[31mLỗi khi lấy danh sách câu hỏi\x1b[0m')
-    console.log(response.data)
+    console.log(`\x1b[31m> course_id không hợp lệ trong file .env\x1b[0m`)
+    console.log(`\x1b[33m> Đang lấy course_id từ server...\x1b[0m`)
+    const res = await http.get(`${api.studying}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        Cookie: cookie
+      }
+    })
+    if (res.data?.code === HttpStatus.OK) {
+      const { data } = res.data
+      const studying = data.map((item: any) => {
+        return {
+          id: item.id,
+          name: item.subject.name,
+          code: item.subject.code
+        }
+      })
+      console.log(`\x1b[32m> Lấy course_id thành công\x1b[0m`)
+      console.log(`\x1b[33m> Đang lưu course_id vào file studying.json\x1b[0m`)
+      if (!fs.existsSync('src/data')) {
+        fs.mkdirSync('src/data')
+      }
+      fs.writeFileSync('src/data/studying.json', JSON.stringify(studying, null, 2))
+      console.log(`\x1b[32m> Lưu course_id thành công\x1b[0m`)
+      console.log(`\x1b[32m> Vui lòng chỉnh lại course_id trong file .env\x1b[0m`)
+      process.exit(0)
+    } else {
+      console.log(`\x1b[31m> Lấy course_id thất bại\x1b[0m`)
+    }
   }
 }
 

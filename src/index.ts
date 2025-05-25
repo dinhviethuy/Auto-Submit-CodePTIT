@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { getSolutions, login, submitCode } from './services/api'
 import FormData from 'form-data'
-import { HttpStatus, QuestionStatus, QuestionStatusType } from './constants'
+import { COMPILER, COMPILER_EXTENSION, HttpStatus, QuestionStatus, QuestionStatusType } from './constants'
 import { RandomDelayTime } from './utils'
 import envConfig from './config/envConfig'
 
@@ -46,12 +46,26 @@ const main = async () => {
         }
 
         const fileExtension = path.extname(file)
-        let endWithCpp = ''
-        if (fileExtension !== '.cpp') {
-          fs.renameSync(path.resolve(__dirname, 'resource', file), path.resolve(__dirname, 'resource', file + '.cpp'))
-          endWithCpp = '.cpp'
+        let endWithExt = ''
+        if (!COMPILER_EXTENSION.includes(fileExtension as any)) {
+          endWithExt = COMPILER_EXTENSION.find((item) => item === fileExtension)!
+          fs.renameSync(
+            path.resolve(__dirname, 'resource', file),
+            path.resolve(__dirname, 'resource', file + endWithExt)
+          )
+          console.log(`\x1b[32mĐã đổi tên file ${file} thành ${file + endWithExt}\x1b[0m`)
+        } else {
+          const compiler = COMPILER.find((item) => item.ext === fileExtension)!
+          if (compiler.id !== envConfig.COMPILER) {
+            console.log(`\x1b[33mĐang chỉnh lại compiler trong file .env\x1b[0m`)
+            const envContent = fs.readFileSync('.env', 'utf8')
+            const newEnvContent = envContent.replace(/^COMPILER=.*/m, `COMPILER=${compiler.id}`)
+            envConfig.COMPILER = compiler.id
+            fs.writeFileSync('.env', newEnvContent)
+            console.log(`\x1b[32mĐã chỉnh lại compiler trong file .env để phù hợp với ${compiler.ext}\x1b[0m`)
+          }
         }
-        const codePath = path.resolve(__dirname, 'resource', file + endWithCpp)
+        const codePath = path.resolve(__dirname, 'resource', file + endWithExt)
         const formData = new FormData()
         formData.append('question', question)
         formData.append('compiler', envConfig.COMPILER)

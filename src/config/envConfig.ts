@@ -21,12 +21,10 @@ const envSchema = z.object({
   MA_SV: z.string(),
   PASSWORD: z.string(),
   COURSE_ID: z.string(),
-  COMPILER: z.custom<number>((val) => {
-    if (typeof val === 'string') {
-      val = parseInt(val)
-      if (isNaN(val)) {
-        return false
-      }
+  COMPILER: z.custom<number>((val: string) => {
+    const newVal = parseInt(val)
+    if (isNaN(newVal)) {
+      return false
     }
     return true
   })
