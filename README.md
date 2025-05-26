@@ -2,9 +2,9 @@
 
 Ứng dụng tự động submit code lên hệ thống PTIT.
 
-[![GitHub](https://img.shields.io/github/license/dinhviethuy/Auto-Submit-CodePTIT)](https://github.com/dinhviethuy/Auto-Submit-CodePTIT/blob/master/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/dinhviethuy/Auto-Submit-CodePTIT)](https://github.com/dinhviethuy/Auto-Submit-CodePTIT/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/dinhviethuy/Auto-Submit-CodePTIT)](https://github.com/dinhviethuy/Auto-Submit-CodePTIT/network/members)
+[![License](https://img.shields.io/github/license/dinhviethuy/Auto-Submit-CodePTIT?branch=master)](https://github.com/dinhviethuy/Auto-Submit-CodePTIT/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/dinhviethuy/Auto-Submit-CodePTIT?branch=master)](https://github.com/dinhviethuy/Auto-Submit-CodePTIT/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/dinhviethuy/Auto-Submit-CodePTIT?branch=master)](https://github.com/dinhviethuy/Auto-Submit-CodePTIT/network/members)
 
 ## Yêu cầu hệ thống
 
