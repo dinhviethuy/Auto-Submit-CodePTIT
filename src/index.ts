@@ -1,3 +1,5 @@
+// Copyright (c) 2025, dinhviethuy
+// Licensed under the ISC License
 import fs from 'fs'
 import path from 'path'
 import { getSolutions, login, submitCode } from './services/api'
